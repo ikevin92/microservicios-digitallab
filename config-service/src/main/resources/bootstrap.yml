@@ -7,6 +7,7 @@ spring:
       server:
         git:
           uri: https://github.com/ikevin92/microservicios-digitallab.git
+          mybranch: main
           searchPaths: config-data
           username: ${GIT_USER}
           password: ${GIT_PASSWORD}
