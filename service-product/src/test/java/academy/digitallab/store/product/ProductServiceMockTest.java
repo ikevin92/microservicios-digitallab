@@ -1,17 +1,16 @@
-package academy.digitallab.store.service.product;
+package academy.digitallab.store.product;
 
-import academy.digitallab.store.service.product.entity.Category;
-import academy.digitallab.store.service.product.entity.Product;
-import academy.digitallab.store.service.product.repository.ProductRepository;
-import academy.digitallab.store.service.product.service.ProductService;
-import academy.digitallab.store.service.product.service.ProductServiceImpl;
+import academy.digitallab.store.product.entity.Product;
+import academy.digitallab.store.product.entity.Category;
+import academy.digitallab.store.product.repository.ProductRepository;
+import academy.digitallab.store.product.service.ProductService;
+import academy.digitallab.store.product.service.ProductServiceImpl;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.Optional;

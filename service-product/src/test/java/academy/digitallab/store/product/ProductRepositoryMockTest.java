@@ -1,8 +1,8 @@
-package academy.digitallab.store.service.product;
+package academy.digitallab.store.product;
 
-import academy.digitallab.store.service.product.entity.Category;
-import academy.digitallab.store.service.product.entity.Product;
-import academy.digitallab.store.service.product.repository.ProductRepository;
+import academy.digitallab.store.product.entity.Category;
+import academy.digitallab.store.product.entity.Product;
+import academy.digitallab.store.product.repository.ProductRepository;
 
 import org.junit.jupiter.api.Test;
 import org.assertj.core.api.Assertions;

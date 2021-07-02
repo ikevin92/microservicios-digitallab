@@ -1,7 +1,7 @@
-package academy.digitallab.store.service.product.service;
+package academy.digitallab.store.product.service;
 
-import academy.digitallab.store.service.product.entity.Category;
-import academy.digitallab.store.service.product.entity.Product;
+import academy.digitallab.store.product.entity.Category;
+import academy.digitallab.store.product.entity.Product;
 
 import java.util.List;
 
