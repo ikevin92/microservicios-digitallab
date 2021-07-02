@@ -1,6 +1,11 @@
 package academy.digitallab.store.shopping.service;
 
+import academy.digitallab.store.shopping.client.CustomerClient;
+import academy.digitallab.store.shopping.client.ProductClient;
 import academy.digitallab.store.shopping.entity.Invoice;
+import academy.digitallab.store.shopping.entity.InvoiceItem;
+import academy.digitallab.store.shopping.model.Customer;
+import academy.digitallab.store.shopping.model.Product;
 import academy.digitallab.store.shopping.repository.InvoiceItemsRepository;
 import academy.digitallab.store.shopping.repository.InvoiceRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -8,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -18,6 +24,12 @@ public class InvoiceServiceImpl implements InvoiceService {
 
     @Autowired
     InvoiceItemsRepository invoiceItemsRepository;
+
+    @Autowired
+    CustomerClient customerClient;
+
+    @Autowired
+    ProductClient productClient;
 
     @Override
     public List<Invoice> findInvoiceAll() {
@@ -31,8 +43,18 @@ public class InvoiceServiceImpl implements InvoiceService {
         if (invoiceDB != null) {
             return invoiceDB;
         }
+
+        //
         invoice.setState("CREATED");
-        return invoiceRepository.save(invoice);
+
+        invoiceDB = invoiceRepository.save(invoice);
+        //actualizamos el stock de cada uno de los productos
+        invoiceDB.getItems().forEach(invoiceItem -> {
+            productClient.updateStockProduct(invoiceItem.getProductId(), invoiceItem.getQuantity());
+        });
+
+
+        return invoiceDB;
     }
 
 
@@ -63,6 +85,31 @@ public class InvoiceServiceImpl implements InvoiceService {
 
     @Override
     public Invoice getInvoice(Long id) {
-        return invoiceRepository.findById(id).orElse(null);
+        Invoice invoice = invoiceRepository.findById(id).orElse(null);
+
+        //se obtiene el cliente de la factura
+        if (invoice != null) {
+            Customer customer = customerClient.getCustomer(invoice.getCustomerId()).getBody();
+            //seteado en la factura
+            invoice.setCustomer(customer);
+
+            //productos de la factura
+            List<InvoiceItem> lisItem = invoice.getItems()
+                    .stream()
+                    .map(invoiceItem -> {
+
+                        Product product = productClient.getProduct(invoiceItem.getProductId()).getBody();
+                        //seteamos el producto
+                        invoiceItem.setProduct(product);
+
+                        return invoiceItem;
+
+                    }).collect(Collectors.toList());
+
+            // le pasamos la lista de items
+            invoice.setItems(lisItem);
+        }
+
+        return invoice;
     }
 }
