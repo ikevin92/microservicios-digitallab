@@ -1,2 +1,10 @@
-package academy.digitallab.store.shopping.model;public class Category {
+package academy.digitallab.store.shopping.model;
+
+import lombok.Data;
+
+@Data
+public class Category {
+    private Long id;
+
+    private String name;
 }
