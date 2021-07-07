@@ -33,7 +33,7 @@ dependencies {
 	// dependencia para el admin server
 	compile group: 'de.codecentric', name: 'spring-boot-admin-starter-client', version: '2.2.1'
 
-//	implementation 'org.springframework.cloud:spring-cloud-starter-sleuth'
+	implementation 'org.springframework.cloud:spring-cloud-starter-sleuth'
 
 	compileOnly 'org.projectlombok:lombok'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
